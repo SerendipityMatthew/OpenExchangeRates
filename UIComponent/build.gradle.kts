@@ -2,11 +2,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("kapt")
 }
 
 android {
-    namespace = "com.xuwanjin.datastore"
+    namespace = "com.xuwanjin.uicomponent"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -25,6 +24,11 @@ android {
             )
         }
     }
+
+    buildFeatures{
+        buildConfig = true
+        compose = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -32,24 +36,24 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
-        buildConfig = true
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
 }
 
 dependencies {
-    // ui
+    // UI
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
+    implementation(libs.material)
 
-    // Datastore
-    implementation(libs.datastore.preferences)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
 
-    // dagger, hilt
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.dagger.hilt.android)
-
-    //test
+    // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -1,39 +1,25 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp") version ("1.9.0-1.0.13")  apply false// Depends on your kotlin version
     kotlin("kapt")
+    id("com.google.devtools.ksp") version ("1.9.0-1.0.13") // Depends on your kotlin version
 
 }
 
 android {
-    namespace = "com.xuwanjin.openexchangerates"
+    namespace = "com.xuwanjin.currencyconvert"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.xuwanjin.openexchangerates"
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = libs.versions.versionCode.get().toInt()
-        versionName = libs.versions.versionName.toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-        debug {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -41,26 +27,20 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.kotlinCompilerExtensionVersion.get()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    applicationVariants.all {
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    libraryVariants.all {
         addJavaSourceFoldersToModel(
             File(buildDir, "generated/ksp/$name/kotlin")
         )
@@ -72,7 +52,7 @@ dependencies {
     implementation(project(":Network"))
     implementation(project(":BaseUtils"))
     implementation(project(":UIComponent"))
-    implementation(project(":CurrencyConvert"))
+    implementation(project(":CoreData"))
 
     // UI, compose
     implementation(libs.core.ktx)
@@ -84,11 +64,15 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
+    implementation(libs.hilt.navigation.compose)
 
     // dagger, hilt
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt.android)
+
     implementation(libs.compose.destinations.core)
+    ksp(libs.compose.destinations.ksp)
+    implementation(libs.sandwich)
 
     // test
     testImplementation(libs.junit)

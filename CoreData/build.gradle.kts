@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.xuwanjin.datastore"
+    namespace = "com.xuwanjin.coredata"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -25,6 +25,9 @@ android {
             )
         }
     }
+    buildFeatures{
+        buildConfig = true
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -32,24 +35,28 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-    buildFeatures{
-        buildConfig = true
-    }
 }
 
 dependencies {
-    // ui
+
+    implementation(project(":BaseUtils"))
+    implementation(project(":Network"))
+    // UI
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
-
-    // Datastore
-    implementation(libs.datastore.preferences)
 
     // dagger, hilt
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.dagger.hilt.android)
 
-    //test
+    // network
+    implementation(libs.sandwich)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging)
+
+    // Test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

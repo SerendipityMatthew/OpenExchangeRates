@@ -17,3 +17,6 @@ rootProject.name = "Open Exchange Rates"
 include(":app")
 include(":Network")
 include(":BaseUtils")
+include(":UIComponent")
+include(":CurrencyConvert")
+include(":CoreData")
