@@ -105,7 +105,7 @@ fun CurrencyConvertScreen(
             when (currencyConvertUiState) {
                 is CurrencyConvertUiState.Success -> {
                     val ratesPairList =
-                        (currencyConvertUiState as CurrencyConvertUiState.Success).currencyData.ratesMap.toList()
+                        (currencyConvertUiState as CurrencyConvertUiState.Success).currencyData?.ratesMap?.toList()
                     LazyVerticalGrid(
                         modifier = Modifier.padding(top = 20.dp),
                         columns = GridCells.Fixed(3),
@@ -113,36 +113,39 @@ fun CurrencyConvertScreen(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         content = {
-                            items(ratesPairList.size) { index: Int ->
-                                Column(
-                                    modifier = Modifier
-                                        .height(80.dp)
-                                        .background(Color.Gray)
-                                ) {
-                                    Text(
-                                        modifier = Modifier.weight(1.0f),
-                                        text = String.format(
-                                            "%.3f",
-                                            (ratesPairList[index].second)
-                                        ),
-                                        style = TextStyle(
-                                            color = Color.Green,
-                                            fontWeight = FontWeight.Medium,
-                                            fontSize = 20.sp,
-                                        ),
-                                        maxLines = 2,
-                                    )
-                                    Text(
-                                        text = ratesPairList[index].first,
-                                        style = TextStyle(
-                                            color = Color.Green,
-                                            fontWeight = FontWeight.Normal,
-                                            fontSize = 12.sp,
+                            if (!ratesPairList.isNullOrEmpty()){
+                                items(ratesPairList.size) { index: Int ->
+                                    Column(
+                                        modifier = Modifier
+                                            .height(80.dp)
+                                            .background(Color.Gray)
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.weight(1.0f),
+                                            text = String.format(
+                                                "%.3f",
+                                                (ratesPairList[index].second)
+                                            ),
+                                            style = TextStyle(
+                                                color = Color.Green,
+                                                fontWeight = FontWeight.Medium,
+                                                fontSize = 20.sp,
+                                            ),
+                                            maxLines = 2,
                                         )
-                                    )
+                                        Text(
+                                            text = ratesPairList[index].first,
+                                            style = TextStyle(
+                                                color = Color.Green,
+                                                fontWeight = FontWeight.Normal,
+                                                fontSize = 12.sp,
+                                            )
+                                        )
 
+                                    }
                                 }
                             }
+
                         }
                     )
 
@@ -174,7 +177,7 @@ private fun ColumnScope.CurrencyDropdownMenu(
             when (currencyConvertUiState) {
                 is CurrencyConvertUiState.Success -> {
                     val date =
-                        AppUtils.timestampToLocalDate(currencyConvertUiState.currencyData.timestamp)
+                        AppUtils.timestampToLocalDate(currencyConvertUiState.currencyData?.timestamp?:0)
                     Text(
                         modifier = Modifier,
                         text = "data updated time: $date",
@@ -219,8 +222,8 @@ private fun ColumnScope.CurrencyDropdownMenu(
                     when (currencyConvertUiState) {
                         is CurrencyConvertUiState.Success -> {
                             val keys =
-                                currencyConvertUiState.currencyData.ratesMap.keys.toList()
-                            keys.forEachIndexed { index, _ ->
+                                currencyConvertUiState.currencyData?.ratesMap?.keys?.toList()
+                            keys?.forEachIndexed { index, _ ->
                                 val item = keys[index]
                                 DropdownMenuItem(
                                     text = { Text(item) },
