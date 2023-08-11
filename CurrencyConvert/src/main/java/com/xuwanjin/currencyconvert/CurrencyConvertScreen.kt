@@ -47,7 +47,7 @@ import com.xuwanjin.uicomponent.BaseTextField
 import com.xuwanjin.uicomponent.RoundedCornerShape12
 
 @RootNavGraph(start = true)
-@Destination()
+@Destination
 @Preview
 @Composable
 fun CurrencyConvertScreen(

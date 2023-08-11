@@ -1,24 +1,25 @@
 package com.xuwanjin.currencyconvert
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import com.xuwanjin.coredata.CurrencyData
 import com.xuwanjin.coredata.CurrencyDataRepo
+import com.xuwanjin.coredata.dao.CurrencyStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.util.TreeMap
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -30,7 +31,9 @@ sealed interface CurrencyConvertUiState {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val currencyRepo: CurrencyDataRepo
+    private val currencyRepo: CurrencyDataRepo,
+    private val currencyStore: CurrencyStore,
+    private val application: Application
 ) : ViewModel(), CoroutineScope {
     companion object {
         const val TAG = "MainViewModel"
@@ -40,10 +43,19 @@ class MainViewModel @Inject constructor(
         get() = Dispatchers.IO
 
     init {
-        fetchLatestCurrencies()
+        fetchCurrencies()
     }
 
-    private var ratesBaseUSD = mutableMapOf<String,Float>()
+    private fun fetchCurrencies() {
+        fetchCurrenciesFromDB()
+        fetchLatestCurrenciesFromNetwork()
+    }
+
+
+    /**
+     * LinkedHashMap keep the order of data.
+     */
+    private var ratesBaseUSD = mutableMapOf<String, Float>()
 
     private var _currencyConvertUiState: MutableStateFlow<CurrencyData> =
         MutableStateFlow(
@@ -80,20 +92,29 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private fun fetchLatestCurrencies() {
+    private fun fetchCurrenciesFromDB() {
         viewModelScope.launch(coroutineContext) {
+            currencyStore.getCurrencyBaseInUSD()
+                .collect { data ->
+                    _currencyConvertUiState.value = data
+                }
+            fetchLatestCurrenciesFromNetwork()
+        }
+    }
+
+    private fun fetchLatestCurrenciesFromNetwork() {
+        viewModelScope.launch {
             currencyRepo.getLatestCurrency()
                 .suspendOnSuccess {
                     ratesBaseUSD = this.data.ratesMap.toMutableMap()
                     _currencyConvertUiState.value = this.data
+                    currencyStore.updateCurrencyData(this.data)
                 }
                 .suspendOnError {
 
                 }
                 .suspendOnException {
-
                 }
-
         }
     }
 

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
+    id("com.google.devtools.ksp") version ("1.9.0-1.0.13") // Depends on your kotlin version
 }
 
 android {
@@ -55,6 +56,11 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging)
+
+    // room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // Test
     testImplementation(libs.junit)

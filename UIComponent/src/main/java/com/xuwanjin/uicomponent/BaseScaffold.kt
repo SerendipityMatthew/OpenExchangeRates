@@ -12,7 +12,6 @@ fun BaseScaffold(
     bottomBarLayout: @Composable () -> Unit = {},
     content: @Composable () -> Unit = {},
 ) {
-
     Scaffold(
         modifier = modifier,
         contentColor = Color.Transparent,

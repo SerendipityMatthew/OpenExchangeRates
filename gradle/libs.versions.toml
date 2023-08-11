@@ -26,6 +26,7 @@ datastoreCore = "1.0.0"
 hiltNavigationCompose = "1.0.0"
 navigationCompose = "2.6.0"
 composeDestinationsCore = "1.9.51"
+room = "2.5.2"
 
 
 [libraries]
@@ -62,6 +63,9 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 compose-destinations-core = { group = "io.github.raamcosta.compose-destinations", name = "core", version.ref = "composeDestinationsCore" }
 compose-destinations-ksp = { group = "io.github.raamcosta.compose-destinations", name = "ksp", version.ref = "composeDestinationsCore" }
 
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
