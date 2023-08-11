@@ -1,10 +1,7 @@
 package com.xuwanjin.currencyconvert
 
-import android.app.Application
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.skydoves.sandwich.message
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
@@ -33,7 +30,6 @@ sealed interface CurrencyConvertUiState {
 class MainViewModel @Inject constructor(
     private val currencyRepo: CurrencyDataRepo,
     private val currencyStore: CurrencyStore,
-    private val application: Application
 ) : ViewModel(), CoroutineScope {
     companion object {
         const val TAG = "MainViewModel"
@@ -46,6 +42,13 @@ class MainViewModel @Inject constructor(
         fetchCurrencies()
     }
 
+    /**
+     *  the workflow for fetching data
+     *   1. fetching data from Database, then update the UI (the result maybe null, outdated)
+     *   2. at the same time, fetching data from network, then update the UI
+     *      (we use the flow for fetching data from database, it will automatically update the data after the inserting.
+     *        so ignore the timing issues. It's so happy that working with Flow)
+     */
     private fun fetchCurrencies() {
         fetchCurrenciesFromDB()
         fetchLatestCurrenciesFromNetwork()
@@ -53,7 +56,7 @@ class MainViewModel @Inject constructor(
 
 
     /**
-     * LinkedHashMap keep the order of data.
+     * LinkedHashMap: for keep the order of data.
      */
     private var ratesBaseUSD = mutableMapOf<String, Float>()
 
@@ -75,9 +78,14 @@ class MainViewModel @Inject constructor(
                 return@launch
             }
             val data = _currencyConvertUiState.value
-            // 1 USD， 143 JPY， 7 CNY
-            // 2 USD   286 JPY  14 CNY
-            // 10 CNY ->  XX USD ---> YY JPY
+
+            /**   the basic logic for processing the exchange
+             *    for example: 14 CNY convert to 2 USD , then convert to 286 JPY
+             *    1 USD， 143 JPY， 7 CNY
+             *    2 USD   286 JPY  14 CNY
+             *    10 CNY ->  XX USD ---> YY JPY
+             *
+             */
             val rate = ratesBaseUSD[baseCurrency]
             if (rate == null) {
                 return@launch
@@ -92,17 +100,27 @@ class MainViewModel @Inject constructor(
 
     }
 
+    /**
+     *  using the data that stored in database,
+     *      maybe we cannot connect to network.
+     *      maybe we did not store any data in database.
+     */
     private fun fetchCurrenciesFromDB() {
         viewModelScope.launch(coroutineContext) {
             currencyStore.getCurrencyBaseInUSD()
                 .collect { data ->
-                    _currencyConvertUiState.value = data
-                    ratesBaseUSD = data.ratesMap.toMutableMap()
+                    data?.let {
+                        _currencyConvertUiState.value = it
+                        ratesBaseUSD = it.ratesMap.toMutableMap()
+                    }
                 }
-            fetchLatestCurrenciesFromNetwork()
         }
     }
 
+    /**
+     *  fetch the latest data from network
+     *   then update the database.
+     */
     private fun fetchLatestCurrenciesFromNetwork() {
         viewModelScope.launch {
             currencyRepo.getLatestCurrency()
@@ -112,8 +130,10 @@ class MainViewModel @Inject constructor(
                     currencyStore.updateCurrencyData(this.data)
                 }
                 .suspendOnError {
+
                 }
                 .suspendOnException {
+                    
                 }
         }
     }

@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp") version ("1.9.0-1.0.13")  apply false// Depends on your kotlin version
+    alias(libs.plugins.kspLibrary) apply false
+
     kotlin("kapt")
 
 }
@@ -42,11 +43,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true

@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
-    id("com.google.devtools.ksp") version ("1.9.0-1.0.13") // Depends on your kotlin version
+    alias(libs.plugins.kspLibrary) // Depends on your kotlin version
 }
 
 android {

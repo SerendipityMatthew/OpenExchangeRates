@@ -15,6 +15,9 @@ import kotlinx.coroutines.runBlocking
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "OERDataStore")
 
+/**
+ * the datastore for all module
+ */
 object DataStoreUtils {
     private lateinit var dataStore: DataStore<Preferences>
 
@@ -23,6 +26,10 @@ object DataStoreUtils {
             dataStore = context.dataStore
         }
     }
+
+    /**
+     *  the generic method for fetching all data
+     */
     @Suppress("UNCHECKED_CAST")
     fun <Data> getSyncData(key: String, default: Data): Data {
         val res = when (default) {
@@ -36,6 +43,9 @@ object DataStoreUtils {
         return res as Data
     }
 
+    /**
+     *  the generic method for saving all data
+     */
     fun <Data> putSyncData(key: String, value: Data) {
         when (value) {
             is Long -> saveSyncLongData(key, value)

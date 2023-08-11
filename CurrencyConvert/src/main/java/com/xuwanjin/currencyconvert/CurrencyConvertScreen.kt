@@ -171,7 +171,6 @@ private fun ColumnScope.CurrencyDropdownMenu(
 ) {
     Box(
         modifier = Modifier
-
             .align(Alignment.End),
     ) {
         Row(

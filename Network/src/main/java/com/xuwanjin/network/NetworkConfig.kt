@@ -1,5 +1,8 @@
 package com.xuwanjin.network
 
+/**
+ *  the Config for network: timeout, baseurl etc.
+ */
 object NetworkConfig {
     const val HTTP_WRITE_TIMEOUT:Long = 30
     const val HTTP_CONNECT_TIMEOUT:Long = 30

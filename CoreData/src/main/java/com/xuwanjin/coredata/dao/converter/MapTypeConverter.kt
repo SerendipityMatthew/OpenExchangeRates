@@ -6,6 +6,10 @@ import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
+/**
+ *  for rates (data type: Map<String, Float>)
+ *     we need a converter for the Type.
+ */
 object StringMapConverter {
     @TypeConverter
     @JvmStatic

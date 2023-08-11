@@ -5,6 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
+/**
+ *  the base scaffold for all screen,
+ *  it should three layout: top, content, bottom. all  of them have default value,
+ *
+ */
 @Composable
 fun BaseScaffold(
     modifier: Modifier = Modifier,

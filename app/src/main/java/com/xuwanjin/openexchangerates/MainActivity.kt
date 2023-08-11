@@ -35,6 +35,10 @@ class MainActivity : ComponentActivity() {
                     val navController = engine.rememberNavController()
 
                     val startRoute = CurrencyConvertScreenDestination
+                    /**
+                     *  use the compose-destinations for navigation.
+                     *  here is the repo https://github.com/raamcosta/compose-destinations
+                     */
                     DestinationsNavHost(
                         navGraph = NavGraphs.root,
                         engine = engine,
