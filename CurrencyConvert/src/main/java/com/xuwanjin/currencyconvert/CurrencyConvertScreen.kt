@@ -61,7 +61,7 @@ fun CurrencyConvertScreen(
     val isExpanded = remember {
         mutableStateOf(false)
     }
-    val currencyConvertUiState by viewModel.currencyConvertUiState.collectAsState()
+    val currencyConvertUiState by viewModel.currencyConvertUiState.collectAsState(CurrencyConvertUiState.Loading)
     val selectedCurrency = remember {
         mutableStateOf("USD")
     }
