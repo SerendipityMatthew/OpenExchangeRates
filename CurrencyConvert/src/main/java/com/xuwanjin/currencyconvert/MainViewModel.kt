@@ -97,7 +97,7 @@ class MainViewModel @Inject constructor(
             currencyStore.getCurrencyBaseInUSD()
                 .collect { data ->
                     _currencyConvertUiState.value = data
-                    Log.d(TAG, "fetchCurrenciesFromDB: data = $data")
+                    ratesBaseUSD = data.ratesMap.toMutableMap()
                 }
             fetchLatestCurrenciesFromNetwork()
         }
@@ -107,13 +107,11 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             currencyRepo.getLatestCurrency()
                 .suspendOnSuccess {
-                    Log.d(TAG, "fetchLatestCurrenciesFromNetwork: 11111 ${this.response.message()}")
                     ratesBaseUSD = this.data.ratesMap.toMutableMap()
                     _currencyConvertUiState.value = this.data
                     currencyStore.updateCurrencyData(this.data)
                 }
                 .suspendOnError {
-//                    Log.d(TAG, "fetchLatestCurrenciesFromNetwork: $this")
                 }
                 .suspendOnException {
                 }
