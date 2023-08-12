@@ -6,12 +6,15 @@ import java.util.Calendar
 
 
 object AppUtils {
-    fun timestampToLocalDate(timestampInSeconds: Long): String {
+
+    /**
+     * timestamp convert to formatted date
+     */
+    fun timestampToLocalDate(timestampInSeconds: Long, format: String = "dd-MM-yyyy"): String {
         return try {
-            Log.d("Matthew", "timestampToLocalDate: timestampInSeconds = $timestampInSeconds")
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = timestampInSeconds * 1000
-            DateFormat.format("dd-MM-yyyy", calendar).toString()
+            DateFormat.format(format, calendar).toString()
         } catch (exception: Exception) {
             exception.printStackTrace()
             ""
