@@ -40,8 +40,8 @@ android {
 
 dependencies {
 
-    implementation(project(":BaseUtils"))
-    implementation(project(":Network"))
+    implementation(project(":utils"))
+    implementation(project(":network"))
     // UI
     implementation(libs.core.ktx)
     implementation(libs.appcompat)

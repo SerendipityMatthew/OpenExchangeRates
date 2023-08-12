@@ -48,11 +48,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":network"))
     // project
-    implementation(project(":Network"))
-    implementation(project(":BaseUtils"))
-    implementation(project(":UIComponent"))
-    implementation(project(":CoreData"))
+    implementation(project(":utils"))
+    implementation(project(":ui-component"))
+    implementation(project(":core-data"))
 
     // UI, compose
     implementation(libs.core.ktx)

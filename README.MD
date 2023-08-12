@@ -1,15 +1,15 @@
 
 [For All Module]
 
-BaseUtils: datastore, extension method for other module.
+utils: datastore, extension method for other module.
 
-CoreData:  database 
+core-data:  database 
 
-CurrencyConvert:  UI module, currency convert screen
+currency-convert:  UI module, currency convert screen
 
-Network: base network for all request
+network: base network for all request
 
-UIComponent:  Base UI for all screen, BaseScaffold,
+ui-component:  Base UI for all screen, BaseScaffold,
 
 
 | Library    | Name                | Link                 |

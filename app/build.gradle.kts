@@ -69,11 +69,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":network"))
     // project
-    implementation(project(":Network"))
-    implementation(project(":BaseUtils"))
-    implementation(project(":UIComponent"))
-    implementation(project(":CurrencyConvert"))
+    implementation(project(":utils"))
+    implementation(project(":ui-component"))
+    implementation(project(":currency-convert"))
 
     // UI, compose
     implementation(libs.core.ktx)
