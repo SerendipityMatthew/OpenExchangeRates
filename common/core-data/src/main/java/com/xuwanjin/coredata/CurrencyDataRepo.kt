@@ -1,7 +1,6 @@
 package com.xuwanjin.coredata
 
 import com.skydoves.sandwich.ApiResponse
-import com.skydoves.sandwich.suspendMapSuccess
 import com.xuwanjin.datastore.AppConstant
 import javax.inject.Inject
 

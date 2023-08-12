@@ -15,8 +15,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Open Exchange Rates"
 include(":app")
-include(":network")
-include(":utils")
-include(":ui-component")
+include(":common:network")
+include(":common:utils")
+include(":common:ui-component")
 include(":currency-convert")
-include(":core-data")
+include(":common:core-data")

@@ -69,10 +69,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":network"))
+    implementation(project(":common:network"))
     // project
-    implementation(project(":utils"))
-    implementation(project(":ui-component"))
+    implementation(project(":common:utils"))
+    implementation(project(":common:ui-component"))
     implementation(project(":currency-convert"))
 
     // UI, compose
