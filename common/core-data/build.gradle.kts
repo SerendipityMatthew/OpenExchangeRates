@@ -42,9 +42,6 @@ dependencies {
 
     implementation(project(":common:utils"))
     implementation(project(":common:network"))
-    // UI
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
 
     // dagger, hilt
     kapt(libs.dagger.hilt.compiler)

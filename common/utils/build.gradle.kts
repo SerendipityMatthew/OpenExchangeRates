@@ -39,17 +39,9 @@ android {
 }
 
 dependencies {
-    // ui
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
 
     // Datastore
     implementation(libs.datastore.preferences)
-
-    // dagger, hilt
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.dagger.hilt.android)
-
     //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

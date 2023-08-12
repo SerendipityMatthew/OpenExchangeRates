@@ -49,9 +49,6 @@ kapt {
 }
 
 dependencies {
-    // UI
-    implementation(libs.core.ktx)
-    implementation(libs.appcompat)
 
     // dagger, hilt
     kapt(libs.dagger.hilt.compiler)
