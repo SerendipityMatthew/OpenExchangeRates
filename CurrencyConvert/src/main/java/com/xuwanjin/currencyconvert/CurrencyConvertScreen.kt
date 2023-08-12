@@ -95,13 +95,8 @@ fun CurrencyConvertScreen(
                         }
                         try {
                             inputValue.value = value
-                            /**
-                             *  show the base currency if the input is blank.
-                             */
-                            viewModel.onBaseCurrencyChange(
-                                value.ifBlank {
-                                    "1"
-                                }, selectedCurrency.value
+
+                            viewModel.onBaseCurrencyChange(value, selectedCurrency.value
                             )
                         } catch (exception: NumberFormatException) {
                             exception.printStackTrace()

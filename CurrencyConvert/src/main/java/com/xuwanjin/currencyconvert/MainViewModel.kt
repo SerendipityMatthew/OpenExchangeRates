@@ -73,11 +73,17 @@ class MainViewModel @Inject constructor(
                 initialValue = CurrencyConvertUiState.Loading
             )
 
+
     fun onBaseCurrencyChange(input: String, baseCurrency: String) {
-        Log.d(TAG, "onBaseCurrencyChange: input = $input, baseCurrency = $baseCurrency")
         viewModelScope.launch {
             if (baseCurrency.isBlank()) {
                 return@launch
+            }
+            /**
+             *  show the base currency if the input is blank.
+             */
+            val modifiedValue = input.ifBlank {
+                "1"
             }
             val data = _currencyConvertUiState.value
 
@@ -92,7 +98,7 @@ class MainViewModel @Inject constructor(
             if (rate == null) {
                 return@launch
             }
-            val moneyInUSD = input.toFloat().div(rate)
+            val moneyInUSD = modifiedValue.toFloat().div(rate)
             val newRatesMap = ratesBaseUSD.toMutableMap()
             val converted = newRatesMap.mapValues {
                 it.value.times(moneyInUSD).toFloat()
