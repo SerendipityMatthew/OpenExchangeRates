@@ -9,13 +9,13 @@ import com.xuwanjin.model.converter.StringMapConverter
 
 @Database(
     entities = [
-        com.xuwanjin.model.CurrencyData::class,
+        CurrencyData::class,
     ],
     version = 1,
     exportSchema = false
 )
 
-@TypeConverters(com.xuwanjin.model.converter.StringMapConverter::class)
+@TypeConverters(StringMapConverter::class)
 abstract class CurrencyDatabase : RoomDatabase() {
     abstract fun currencyDao(): CurrencyDao
 }
