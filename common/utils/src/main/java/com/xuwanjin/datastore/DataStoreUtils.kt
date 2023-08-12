@@ -21,10 +21,20 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "OE
 object DataStoreUtils {
     private lateinit var dataStore: DataStore<Preferences>
 
+    private const val CURRENCY_LAST_UPDATED_TIME: String = "currency_last_updated_time"
+
     fun init(context: Context) {
         if (!this::dataStore.isInitialized) {
             dataStore = context.dataStore
         }
+    }
+
+    fun getLastUpdatedTime(): Long {
+        return readLongData(CURRENCY_LAST_UPDATED_TIME, 0)
+    }
+
+    fun setCurrencyUpdatedTime(timestampInSeconds: Long = System.currentTimeMillis().div(1000)) {
+        saveSyncLongData(CURRENCY_LAST_UPDATED_TIME, timestampInSeconds)
     }
 
     /**

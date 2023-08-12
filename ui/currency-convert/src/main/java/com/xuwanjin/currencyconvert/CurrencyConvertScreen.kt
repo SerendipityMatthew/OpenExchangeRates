@@ -89,7 +89,7 @@ fun CurrencyConvertScreen(
                         val value = if (it.isBlank()) {
                             ""
                         } else {
-                            it.removePrefix(",")
+                            it.removePrefix(",").removePrefix(" ").removePrefix("-")
                         }
                         try {
                             inputValue.value = value

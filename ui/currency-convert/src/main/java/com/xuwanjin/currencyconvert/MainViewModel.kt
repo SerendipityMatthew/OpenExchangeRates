@@ -1,19 +1,26 @@
 package com.xuwanjin.currencyconvert
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
 import com.xuwanjin.model.CurrencyData
 import com.xuwanjin.coredata.CurrencyDataRepo
 import com.xuwanjin.coredata.dao.CurrencyStore
+import com.xuwanjin.datastore.AppUtils
+import com.xuwanjin.datastore.DataStoreUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -38,6 +45,22 @@ class MainViewModel @Inject constructor(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO
 
+    /**
+     * LinkedHashMap: for keep the order of data.
+     */
+    private var ratesBaseUSD = mutableMapOf<String, Float>()
+
+    private var _currencyConvertUiState: MutableStateFlow<CurrencyData> =
+        MutableStateFlow(CurrencyData())
+    val currencyConvertUiState: StateFlow<CurrencyConvertUiState> =
+        _currencyConvertUiState.map(CurrencyConvertUiState::Success)
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = CurrencyConvertUiState.Loading
+            )
+
+
     init {
         fetchCurrencies()
     }
@@ -51,25 +74,18 @@ class MainViewModel @Inject constructor(
      */
     private fun fetchCurrencies() {
         fetchCurrenciesFromDB()
-        fetchLatestCurrenciesFromNetwork()
+        if (AppUtils.isCurrencyDataOutdated()) {
+            fetchLatestCurrenciesFromNetwork()
+        }
     }
 
-
     /**
-     * LinkedHashMap: for keep the order of data.
+     *  the workflow:
+     *      when the input change or baseCurrency changed
+     *       1. using the cache currency then update UI
+     *       2. we should fetch the latest data if it is expired.
+     *          then update
      */
-    private var ratesBaseUSD = mutableMapOf<String, Float>()
-
-    private var _currencyConvertUiState: MutableStateFlow<CurrencyData> = MutableStateFlow(CurrencyData())
-    val currencyConvertUiState: StateFlow<CurrencyConvertUiState> =
-        _currencyConvertUiState.map(CurrencyConvertUiState::Success)
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = CurrencyConvertUiState.Loading
-            )
-
-
     fun onBaseCurrencyChange(input: String, baseCurrency: String) {
         viewModelScope.launch {
             if (baseCurrency.isBlank()) {
@@ -81,7 +97,7 @@ class MainViewModel @Inject constructor(
             val modifiedValue = input.ifBlank {
                 "1"
             }
-            val data = _currencyConvertUiState.value
+            val tempData = _currencyConvertUiState.value
 
             /**   the basic logic for processing the exchange
              *    for example: 14 CNY convert to 2 USD , then convert to 286 JPY
@@ -90,18 +106,35 @@ class MainViewModel @Inject constructor(
              *    10 CNY ->  XX USD ---> YY JPY
              *
              */
-            val rate = ratesBaseUSD[baseCurrency]
-            if (rate == null) {
-                return@launch
-            }
+            val rate = ratesBaseUSD[baseCurrency] ?: return@launch
             val moneyInUSD = modifiedValue.toFloat().div(rate)
             val newRatesMap = ratesBaseUSD.toMutableMap()
             val converted = newRatesMap.mapValues {
                 it.value.times(moneyInUSD)
             }
-            _currencyConvertUiState.value = data.copy(ratesMap = converted)
+            _currencyConvertUiState.value = tempData.copy(ratesMap = converted)
+
+            if (AppUtils.isCurrencyDataOutdated()) {
+                flow {
+                    emit(currencyRepo.getLatestCurrency())
+                }.collect {
+                    it.getOrNull()?.let { data ->
+                        processCurrencyData(data)
+                    }
+
+                }
+            }
         }
 
+    }
+
+    private suspend fun processCurrencyData(data: CurrencyData) {
+        ratesBaseUSD = data.ratesMap.toMutableMap()
+        _currencyConvertUiState.value = data
+        val result = currencyStore.updateCurrencyData(data)
+        if (result > 0) {
+            DataStoreUtils.setCurrencyUpdatedTime(data.timestamp)
+        }
     }
 
     /**
@@ -129,15 +162,13 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             currencyRepo.getLatestCurrency()
                 .suspendOnSuccess {
-                    ratesBaseUSD = this.data.ratesMap.toMutableMap()
-                    _currencyConvertUiState.value = this.data
-                    currencyStore.updateCurrencyData(this.data)
+                    processCurrencyData(this.data)
                 }
                 .suspendOnError {
 
                 }
                 .suspendOnException {
-                    
+
                 }
         }
     }

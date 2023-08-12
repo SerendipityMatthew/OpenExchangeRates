@@ -2,6 +2,7 @@ package com.xuwanjin.datastore
 
 import android.text.format.DateFormat
 import android.util.Log
+import com.xuwanjin.datastore.AppConstant.CURRENCY_DATA_EXPIRED_TIME
 import java.util.Calendar
 
 
@@ -19,5 +20,11 @@ object AppUtils {
             exception.printStackTrace()
             ""
         }
+    }
+
+    fun isCurrencyDataOutdated(timeoutInSeconds: Long = CURRENCY_DATA_EXPIRED_TIME): Boolean {
+        val lastUpdated = DataStoreUtils.getLastUpdatedTime()
+        val currentTime = System.currentTimeMillis().div(1000)
+        return (currentTime - lastUpdated) > timeoutInSeconds
     }
 }
