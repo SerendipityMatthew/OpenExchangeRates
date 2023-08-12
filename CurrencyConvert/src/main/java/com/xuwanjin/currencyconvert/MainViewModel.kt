@@ -1,5 +1,6 @@
 package com.xuwanjin.currencyconvert
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.suspendOnError
@@ -72,7 +73,8 @@ class MainViewModel @Inject constructor(
                 initialValue = CurrencyConvertUiState.Loading
             )
 
-    fun onBaseCurrencyChange(input: Double, baseCurrency: String) {
+    fun onBaseCurrencyChange(input: String, baseCurrency: String) {
+        Log.d(TAG, "onBaseCurrencyChange: input = $input, baseCurrency = $baseCurrency")
         viewModelScope.launch {
             if (baseCurrency.isBlank()) {
                 return@launch
@@ -90,7 +92,7 @@ class MainViewModel @Inject constructor(
             if (rate == null) {
                 return@launch
             }
-            val moneyInUSD = input.div(rate)
+            val moneyInUSD = input.toFloat().div(rate)
             val newRatesMap = ratesBaseUSD.toMutableMap()
             val converted = newRatesMap.mapValues {
                 it.value.times(moneyInUSD).toFloat()

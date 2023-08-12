@@ -12,15 +12,13 @@ import androidx.compose.ui.text.input.KeyboardType
 @Composable
 fun BaseTextField(
     modifier: Modifier = Modifier,
-    inputValue: MutableState<Double>,
+    inputValue: MutableState<String>,
     onValueChange: (String) -> Unit,
 ) {
     TextField(
         modifier = modifier,
         value = inputValue.value.toString(),
-        onValueChange = {
-            onValueChange(it)
-        },
+        onValueChange = onValueChange,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         maxLines = 1,
         colors = TextFieldDefaults.colors(

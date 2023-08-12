@@ -1,5 +1,6 @@
 package com.xuwanjin.currencyconvert
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,15 +54,17 @@ import com.xuwanjin.uicomponent.RoundedCornerShape12
 @Composable
 fun CurrencyConvertScreen(
     viewModel: MainViewModel = hiltViewModel<MainViewModel>(),
-    ) {
+) {
     val inputValue = remember {
-        mutableDoubleStateOf(1.0)
+        mutableStateOf("")
     }
 
     val isExpanded = remember {
         mutableStateOf(false)
     }
-    val currencyConvertUiState by viewModel.currencyConvertUiState.collectAsState(CurrencyConvertUiState.Loading)
+    val currencyConvertUiState by viewModel.currencyConvertUiState.collectAsState(
+        CurrencyConvertUiState.Loading
+    )
     val selectedCurrency = remember {
         mutableStateOf("USD")
     }
@@ -69,8 +72,7 @@ fun CurrencyConvertScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .safeDrawingPadding()
-        ,
+            .safeDrawingPadding(),
         topBarLayout = {
             Column(
                 modifier = Modifier
@@ -85,11 +87,24 @@ fun CurrencyConvertScreen(
                         .clip(RoundedCornerShape12),
                     inputValue,
                     onValueChange = {
-                        try {
-                            inputValue.value = it.toDouble()
-                            viewModel.onBaseCurrencyChange(it.toDouble(), selectedCurrency.value)
-                        } catch (exception: NumberFormatException) {
 
+                        val value = if (it.isBlank()) {
+                            ""
+                        } else {
+                            it.removePrefix(",")
+                        }
+                        try {
+                            inputValue.value = value
+                            /**
+                             *  show the base currency if the input is blank.
+                             */
+                            viewModel.onBaseCurrencyChange(
+                                value.ifBlank {
+                                    "1"
+                                }, selectedCurrency.value
+                            )
+                        } catch (exception: NumberFormatException) {
+                            exception.printStackTrace()
                         }
                     }
                 )
@@ -116,7 +131,7 @@ fun CurrencyConvertScreen(
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                         content = {
-                            if (!ratesPairList.isNullOrEmpty()){
+                            if (!ratesPairList.isNullOrEmpty()) {
                                 items(ratesPairList.size) { index: Int ->
                                     Column(
                                         modifier = Modifier
@@ -179,7 +194,9 @@ private fun ColumnScope.CurrencyDropdownMenu(
             when (currencyConvertUiState) {
                 is CurrencyConvertUiState.Success -> {
                     val date =
-                        AppUtils.timestampToLocalDate(currencyConvertUiState.currencyData?.timestamp?:0)
+                        AppUtils.timestampToLocalDate(
+                            currencyConvertUiState.currencyData?.timestamp ?: 0
+                        )
                     Text(
                         modifier = Modifier,
                         text = "data updated time: $date",
