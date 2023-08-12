@@ -23,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 
 sealed interface CurrencyConvertUiState {
     data object Loading : CurrencyConvertUiState
-    data class Success(val currencyData: com.xuwanjin.model.CurrencyData?) : CurrencyConvertUiState
+    data class Success(val currencyData: CurrencyData?) : CurrencyConvertUiState
 }
 
 @HiltViewModel
@@ -60,10 +60,7 @@ class MainViewModel @Inject constructor(
      */
     private var ratesBaseUSD = mutableMapOf<String, Float>()
 
-    private var _currencyConvertUiState: MutableStateFlow<com.xuwanjin.model.CurrencyData> =
-        MutableStateFlow(
-            com.xuwanjin.model.CurrencyData()
-        )
+    private var _currencyConvertUiState: MutableStateFlow<CurrencyData> = MutableStateFlow(CurrencyData())
     val currencyConvertUiState: StateFlow<CurrencyConvertUiState> =
         _currencyConvertUiState.map(CurrencyConvertUiState::Success)
             .stateIn(
@@ -100,7 +97,7 @@ class MainViewModel @Inject constructor(
             val moneyInUSD = modifiedValue.toFloat().div(rate)
             val newRatesMap = ratesBaseUSD.toMutableMap()
             val converted = newRatesMap.mapValues {
-                it.value.times(moneyInUSD).toFloat()
+                it.value.times(moneyInUSD)
             }
             _currencyConvertUiState.value = data.copy(ratesMap = converted)
         }
