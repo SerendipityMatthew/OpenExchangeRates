@@ -1,12 +1,11 @@
 package com.xuwanjin.currencyconvert
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import com.xuwanjin.coredata.CurrencyData
+import com.xuwanjin.model.CurrencyData
 import com.xuwanjin.coredata.CurrencyDataRepo
 import com.xuwanjin.coredata.dao.CurrencyStore
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +23,7 @@ import kotlin.coroutines.CoroutineContext
 
 sealed interface CurrencyConvertUiState {
     data object Loading : CurrencyConvertUiState
-    data class Success(val currencyData: CurrencyData?) : CurrencyConvertUiState
+    data class Success(val currencyData: com.xuwanjin.model.CurrencyData?) : CurrencyConvertUiState
 }
 
 @HiltViewModel
@@ -61,9 +60,9 @@ class MainViewModel @Inject constructor(
      */
     private var ratesBaseUSD = mutableMapOf<String, Float>()
 
-    private var _currencyConvertUiState: MutableStateFlow<CurrencyData> =
+    private var _currencyConvertUiState: MutableStateFlow<com.xuwanjin.model.CurrencyData> =
         MutableStateFlow(
-            CurrencyData()
+            com.xuwanjin.model.CurrencyData()
         )
     val currencyConvertUiState: StateFlow<CurrencyConvertUiState> =
         _currencyConvertUiState.map(CurrencyConvertUiState::Success)

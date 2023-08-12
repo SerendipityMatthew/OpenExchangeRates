@@ -3,19 +3,19 @@ package com.xuwanjin.coredata.dao
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.xuwanjin.coredata.CurrencyData
-import com.xuwanjin.coredata.dao.converter.StringMapConverter
+import com.xuwanjin.model.CurrencyData
+import com.xuwanjin.model.converter.StringMapConverter
 
 
 @Database(
     entities = [
-        CurrencyData::class,
+        com.xuwanjin.model.CurrencyData::class,
     ],
     version = 1,
     exportSchema = false
 )
 
-@TypeConverters(StringMapConverter::class)
+@TypeConverters(com.xuwanjin.model.converter.StringMapConverter::class)
 abstract class CurrencyDatabase : RoomDatabase() {
     abstract fun currencyDao(): CurrencyDao
 }

@@ -1,4 +1,4 @@
-package com.xuwanjin.coredata.dao.converter
+package com.xuwanjin.model.converter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

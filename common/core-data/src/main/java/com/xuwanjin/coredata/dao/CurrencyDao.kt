@@ -2,7 +2,7 @@ package com.xuwanjin.coredata.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.xuwanjin.coredata.CurrencyData
+import com.xuwanjin.model.CurrencyData
 import kotlinx.coroutines.flow.Flow
 
 
@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
  * [Room] DAO for [CurrencyData] related operations.
  */
 @Dao
-abstract class CurrencyDao : BaseDao<CurrencyData> {
+abstract class CurrencyDao : BaseDao<com.xuwanjin.model.CurrencyData> {
     @Query("SELECT * FROM CurrencyData WHERE base = :baseCurrency")
-    abstract fun getCurrencyBaseInUSD(baseCurrency: String): Flow<CurrencyData?>
+    abstract fun getCurrencyBaseInUSD(baseCurrency: String): Flow<com.xuwanjin.model.CurrencyData?>
 
 }

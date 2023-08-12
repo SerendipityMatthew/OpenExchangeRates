@@ -48,8 +48,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":common:network"))
     // project
+    implementation(project(":common:network"))
+    implementation(project(":common:model"))
     implementation(project(":common:utils"))
     implementation(project(":common:ui-component"))
     implementation(project(":common:core-data"))

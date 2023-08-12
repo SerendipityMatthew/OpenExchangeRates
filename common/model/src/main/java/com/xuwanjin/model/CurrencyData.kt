@@ -1,4 +1,4 @@
-package com.xuwanjin.coredata
+package com.xuwanjin.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,8 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import com.xuwanjin.coredata.dao.converter.StringMapConverter
-import javax.annotation.concurrent.Immutable
+import com.xuwanjin.model.converter.StringMapConverter
 
 @Entity(
     tableName = "CurrencyData",
@@ -15,7 +14,6 @@ import javax.annotation.concurrent.Immutable
         Index("base", unique = true)
     ]
 )
-@Immutable
 data class CurrencyData(
     @PrimaryKey @ColumnInfo(name = "base")   @SerializedName(value = "base") val base: String = "",
     @ColumnInfo(name = "disclaimer")  @SerializedName(value = "disclaimer") val disclaimer: String = "",

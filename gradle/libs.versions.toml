@@ -28,6 +28,7 @@ navigationCompose = "2.6.0"
 composeDestinationsCore = "1.9.51"
 room = "2.5.2"
 ksp = "1.9.0-1.0.13"
+com-google-android-material-material = "1.9.0"
 
 
 [libraries]
@@ -68,6 +69,7 @@ compose-destinations-ksp = { group = "io.github.raamcosta.compose-destinations",
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

@@ -2,12 +2,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    kotlin("kapt")
-    alias(libs.plugins.kspLibrary) // Depends on your kotlin version
+    alias(libs.plugins.kspLibrary)
 }
 
 android {
-    namespace = "com.xuwanjin.coredata"
+    namespace = "com.xuwanjin.model"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -26,9 +25,6 @@ android {
             )
         }
     }
-    buildFeatures{
-        buildConfig = true
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -40,27 +36,13 @@ android {
 
 dependencies {
 
-    implementation(project(":common:utils"))
-    implementation(project(":common:network"))
-    implementation(project(":common:model"))
-
-    // dagger, hilt
-    kapt(libs.dagger.hilt.compiler)
-    implementation(libs.dagger.hilt.android)
-
-    // network
-    implementation(libs.sandwich)
     implementation(libs.retrofit.converter.gson)
-    implementation(libs.retrofit)
-    implementation(libs.okhttp3)
-    implementation(libs.okhttp3.logging)
 
     // room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
-
-    // Test
+    // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
