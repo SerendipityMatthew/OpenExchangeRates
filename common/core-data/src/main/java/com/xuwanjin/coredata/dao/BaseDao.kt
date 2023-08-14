@@ -3,6 +3,7 @@ package com.xuwanjin.coredata.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import androidx.room.Update
 
 interface BaseDao<T> {
@@ -20,4 +21,6 @@ interface BaseDao<T> {
 
     @Delete
     suspend fun delete(entity: T): Int
+
+    suspend fun deleteAll(): Int
 }
