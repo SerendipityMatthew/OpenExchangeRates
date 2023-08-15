@@ -20,7 +20,7 @@ android {
         versionCode = libs.versions.versionCode.get().toInt()
         versionName = libs.versions.versionName.toString()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.xuwanjin.testing.test.OERAndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }

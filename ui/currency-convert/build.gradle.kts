@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kspLibrary)
+    id("com.google.dagger.hilt.android") apply false
 
     kotlin("kapt")
 }
@@ -14,7 +15,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.xuwanjin.testing.test.OERAndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -54,6 +55,7 @@ dependencies {
     implementation(project(":common:utils"))
     implementation(project(":common:ui-component"))
     implementation(project(":common:core-data"))
+    implementation(project(":common:testing"))
 
     // UI, compose
     implementation(libs.core.ktx)
@@ -74,13 +76,20 @@ dependencies {
     implementation(libs.compose.destinations.core)
     ksp(libs.compose.destinations.ksp)
     implementation(libs.sandwich)
-
+    implementation(libs.gson)
     // test
     testImplementation(libs.junit)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptTest(libs.dagger.hilt.compiler)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+    testImplementation(kotlin("test"))
+    // ...with Kotlin.
+    kaptAndroidTest(libs.dagger.hilt.compiler)
+
+
 }

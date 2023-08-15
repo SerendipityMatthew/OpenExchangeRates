@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
@@ -48,7 +49,8 @@ class MainViewModel @Inject constructor(
     /**
      * LinkedHashMap: for keep the order of data.
      */
-    private var ratesBaseUSD = mutableMapOf<String, Float>()
+    @VisibleForTesting
+    var ratesBaseUSD = mutableMapOf<String, Float>()
 
     private var _currencyConvertUiState: MutableStateFlow<CurrencyData> =
         MutableStateFlow(CurrencyData())
