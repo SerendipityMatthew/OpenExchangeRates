@@ -14,7 +14,7 @@ import javax.inject.Singleton
 object CurrencyDataModule {
     @Singleton
     @Provides
-    fun provideDeviceRepository(
+    fun provideCurrencyDataRepository(
         currencyDataApi: CurrencyDataApi
     ): CurrencyDataRepo {
         return CurrencyDataRepo(currencyDataApi)
