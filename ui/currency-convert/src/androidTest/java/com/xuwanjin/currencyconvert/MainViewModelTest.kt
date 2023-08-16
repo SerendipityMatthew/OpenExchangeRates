@@ -1,7 +1,6 @@
 @file:Suppress("IllegalIdentifier")
 package com.xuwanjin.currencyconvert
 
-import android.util.Log
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.xuwanjin.coredata.CurrencyDataRepo
 import com.xuwanjin.coredata.dao.CurrencyStore
@@ -18,7 +17,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltAndroidTest
 class MainViewModelTest {

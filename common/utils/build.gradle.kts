@@ -13,7 +13,7 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.xuwanjin.testing.test.OERAndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -39,12 +39,14 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":common:testing"))
     // Datastore
     implementation(libs.datastore.preferences)
+
     //test
-    implementation(libs.junit)
     testImplementation(libs.junit)
+
+    androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }
