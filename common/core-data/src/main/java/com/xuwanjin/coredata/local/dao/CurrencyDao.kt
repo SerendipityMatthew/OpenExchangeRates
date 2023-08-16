@@ -1,4 +1,4 @@
-package com.xuwanjin.coredata.dao
+package com.xuwanjin.coredata.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query

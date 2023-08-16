@@ -1,4 +1,4 @@
-package com.xuwanjin.coredata.dao
+package com.xuwanjin.coredata.local.dao
 
 import com.xuwanjin.model.CurrencyData
 import kotlinx.coroutines.flow.Flow

@@ -1,9 +1,9 @@
-package com.xuwanjin.coredata
+package com.xuwanjin.coredata.local
 
 import android.app.Application
 import androidx.room.Room
-import com.xuwanjin.coredata.dao.CurrencyDatabase
-import com.xuwanjin.coredata.dao.CurrencyStore
+import com.xuwanjin.coredata.local.dao.CurrencyDatabase
+import com.xuwanjin.coredata.local.dao.CurrencyStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,10 +14,7 @@ import dagger.hilt.components.SingletonComponent
 object DatabaseModule {
     @Provides
     fun provideDatabaseModule(application: Application): CurrencyDatabase {
-
         return Room.databaseBuilder(application, CurrencyDatabase::class.java, "CurrencyData.db")
-            // This is not recommended for normal apps, but the goal of this sample isn't to
-            // showcase all of Room.
             .fallbackToDestructiveMigration()
             .build()
     }

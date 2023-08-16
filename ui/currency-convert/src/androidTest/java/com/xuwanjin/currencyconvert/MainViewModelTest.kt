@@ -2,8 +2,8 @@
 package com.xuwanjin.currencyconvert
 
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import com.xuwanjin.coredata.CurrencyDataRepo
-import com.xuwanjin.coredata.dao.CurrencyStore
+import com.xuwanjin.coredata.remote.CurrencyDataRepo
+import com.xuwanjin.coredata.local.dao.CurrencyStore
 import com.xuwanjin.datastore.DataStoreUtils
 import com.xuwanjin.testing.test.MainDispatcherRule
 import com.xuwanjin.testing.test.MockCurrencyData

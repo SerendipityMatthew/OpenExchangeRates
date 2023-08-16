@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.runner.AndroidJUnit4
-import com.xuwanjin.coredata.dao.CurrencyDao
-import com.xuwanjin.coredata.dao.CurrencyDatabase
+import com.xuwanjin.coredata.local.dao.CurrencyDao
+import com.xuwanjin.coredata.local.dao.CurrencyDatabase
 import com.xuwanjin.model.CurrencyData
 import com.xuwanjin.testing.test.MockCurrencyData.fakeCurrencyMapBaseCNY
 import com.xuwanjin.testing.test.MockCurrencyData.fakeCurrencyMapBaseUSD

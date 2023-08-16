@@ -6,8 +6,8 @@ import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import com.xuwanjin.coredata.CurrencyDataRepo
-import com.xuwanjin.coredata.dao.CurrencyStore
+import com.xuwanjin.coredata.remote.CurrencyDataRepo
+import com.xuwanjin.coredata.local.dao.CurrencyStore
 import com.xuwanjin.datastore.AppUtils
 import com.xuwanjin.datastore.DataStoreUtils
 import com.xuwanjin.model.CurrencyData

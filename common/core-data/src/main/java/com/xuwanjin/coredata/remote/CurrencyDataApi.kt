@@ -1,4 +1,4 @@
-package com.xuwanjin.coredata
+package com.xuwanjin.coredata.remote
 
 import com.skydoves.sandwich.ApiResponse
 import com.xuwanjin.model.CurrencyData
