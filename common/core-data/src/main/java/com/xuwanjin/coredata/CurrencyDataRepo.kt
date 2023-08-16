@@ -27,7 +27,6 @@ class CurrencyDataRepo @Inject constructor(
                 saveDataAndRecordTimestamp(this.data)
             }
         }
-
     }
 
     /**

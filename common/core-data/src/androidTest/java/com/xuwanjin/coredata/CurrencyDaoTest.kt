@@ -24,7 +24,6 @@ class CurrencyDaoTest {
     private lateinit var currencyDao: CurrencyDao
     private lateinit var database: CurrencyDatabase
 
-
     @Before
     fun createDb() {
         val context: Context = ApplicationProvider.getApplicationContext()
