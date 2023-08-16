@@ -25,6 +25,7 @@ object AppUtils {
     fun isCurrencyDataOutdated(timeoutInSeconds: Long = CURRENCY_DATA_EXPIRED_TIME): Boolean {
         val lastUpdated = DataStoreUtils.getLastUpdatedTime()
         val currentTime = System.currentTimeMillis().div(1000)
+        Log.d("Matthew", "isCurrencyDataOutdated: currentTime = $currentTime, lastUpdated = $lastUpdated,  = ${(currentTime - lastUpdated)}")
         return (currentTime - lastUpdated) > timeoutInSeconds
     }
 }

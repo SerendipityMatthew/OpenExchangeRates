@@ -1,5 +1,7 @@
 package com.xuwanjin.coredata.remote
 
+import com.xuwanjin.coredata.CurrencyDataRepo
+import com.xuwanjin.coredata.local.dao.CurrencyStore
 import com.xuwanjin.network.NetworkModule
 import dagger.Module
 import dagger.Provides
@@ -12,13 +14,7 @@ import javax.inject.Singleton
 @Module(includes = [NetworkModule::class])
 @InstallIn(SingletonComponent::class)
 object CurrencyDataModule {
-    @Singleton
-    @Provides
-    fun provideCurrencyDataRepository(
-        currencyDataApi: CurrencyDataApi
-    ): CurrencyDataRepo {
-        return CurrencyDataRepo(currencyDataApi)
-    }
+
 
     @Singleton
     @Provides

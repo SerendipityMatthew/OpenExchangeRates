@@ -6,10 +6,8 @@ import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import com.xuwanjin.coredata.remote.CurrencyDataRepo
-import com.xuwanjin.coredata.local.dao.CurrencyStore
+import com.xuwanjin.coredata.CurrencyDataRepo
 import com.xuwanjin.datastore.AppUtils
-import com.xuwanjin.datastore.DataStoreUtils
 import com.xuwanjin.model.CurrencyData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -33,8 +31,7 @@ sealed interface CurrencyConvertUiState {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val currencyRepo: CurrencyDataRepo,
-    private val currencyStore: CurrencyStore,
+    private val currencyDataRepo: CurrencyDataRepo,
 ) : ViewModel(), CoroutineScope {
     companion object {
         const val TAG = "MainViewModel"
@@ -85,7 +82,7 @@ class MainViewModel @Inject constructor(
      *       2. we should fetch the latest data if it is expired.
      *          then update
      */
-    fun onBaseCurrencyChange(input: String, baseCurrency: String) {
+    fun onUserIntentChange(input: String, baseCurrency: String) {
         viewModelScope.launch {
             if (baseCurrency.isBlank()) {
                 return@launch
@@ -115,7 +112,7 @@ class MainViewModel @Inject constructor(
 
             if (AppUtils.isCurrencyDataOutdated()) {
                 flow {
-                    emit(currencyRepo.getLatestCurrency())
+                    emit(currencyDataRepo.getLatestCurrency())
                 }.collect {
                     it.getOrNull()?.let { data ->
                         processCurrencyData(data)
@@ -127,13 +124,9 @@ class MainViewModel @Inject constructor(
 
     }
 
-    private suspend fun processCurrencyData(data: CurrencyData) {
+    private fun processCurrencyData(data: CurrencyData) {
         ratesBaseUSD = data.ratesMap.toMutableMap()
         _currencyConvertUiState.value = data
-        val result = currencyStore.updateCurrencyData(data)
-        if (result > 0) {
-            DataStoreUtils.setCurrencyUpdatedTime(data.timestamp)
-        }
     }
 
     /**
@@ -143,11 +136,10 @@ class MainViewModel @Inject constructor(
      */
     private fun fetchCurrenciesFromDB() {
         viewModelScope.launch(coroutineContext) {
-            currencyStore.getCurrencyBaseInUSD()
+            currencyDataRepo.getCurrencyInDB()
                 .collect { data ->
                     data?.let {
-                        _currencyConvertUiState.value = it
-                        ratesBaseUSD = it.ratesMap.toMutableMap()
+                        processCurrencyData(it)
                     }
                 }
         }
@@ -159,7 +151,7 @@ class MainViewModel @Inject constructor(
      */
     private fun fetchLatestCurrenciesFromNetwork() {
         viewModelScope.launch {
-            currencyRepo.getLatestCurrency()
+            currencyDataRepo.getLatestCurrency()
                 .suspendOnSuccess {
                     processCurrencyData(this.data)
                 }

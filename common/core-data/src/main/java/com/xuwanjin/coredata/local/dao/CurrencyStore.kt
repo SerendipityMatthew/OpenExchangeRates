@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 class CurrencyStore(
     private val currencyDao: CurrencyDao,
 ) {
-    suspend fun getCurrencyBaseInUSD(): Flow<CurrencyData?> {
-        return currencyDao.getCurrencyBaseInUSD(baseCurrency = "USD")
+    suspend fun getCurrencyInDB(baseCurrency: String = "USD"): Flow<CurrencyData?> {
+        return currencyDao.getCurrencyBaseInUSD(baseCurrency = baseCurrency)
     }
 
     suspend fun updateCurrencyData(currencyData: CurrencyData) = currencyDao.insert(currencyData)

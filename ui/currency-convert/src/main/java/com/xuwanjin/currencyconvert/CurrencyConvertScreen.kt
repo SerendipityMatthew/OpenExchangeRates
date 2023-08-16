@@ -94,7 +94,7 @@ fun CurrencyConvertScreen(
                         try {
                             inputValue.value = value
 
-                            viewModel.onBaseCurrencyChange(value, selectedCurrency.value
+                            viewModel.onUserIntentChange(value, selectedCurrency.value
                             )
                         } catch (exception: NumberFormatException) {
                             exception.printStackTrace()
@@ -106,7 +106,7 @@ fun CurrencyConvertScreen(
                     selectedCurrency = selectedCurrency,
                     currencyConvertUiState = currencyConvertUiState,
                     onBaseCurrencyChange = {
-                        viewModel.onBaseCurrencyChange(inputValue.value, it)
+                        viewModel.onUserIntentChange(inputValue.value, it)
                     }
                 )
 

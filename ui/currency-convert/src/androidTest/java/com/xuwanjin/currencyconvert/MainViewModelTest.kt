@@ -2,7 +2,6 @@
 package com.xuwanjin.currencyconvert
 
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
-import com.xuwanjin.coredata.remote.CurrencyDataRepo
 import com.xuwanjin.coredata.local.dao.CurrencyStore
 import com.xuwanjin.datastore.DataStoreUtils
 import com.xuwanjin.testing.test.MainDispatcherRule
@@ -52,7 +51,7 @@ class MainViewModelTest {
         val convertUiStateJob = launch(coroutineRule.testDispatcher) {
             mainViewModel.currencyConvertUiState.collect()
         }
-        viewModel.onBaseCurrencyChange("", "USD")
+        viewModel.onUserIntentChange("", "USD")
         val result = (viewModel.currencyConvertUiState.value as CurrencyConvertUiState.Success).currencyData?.ratesMap
 
         assertEquals(
@@ -67,7 +66,7 @@ class MainViewModelTest {
         val convertUiStateJob = launch(coroutineRule.testDispatcher) {
             mainViewModel.currencyConvertUiState.collect()
         }
-        viewModel.onBaseCurrencyChange("1", "USD")
+        viewModel.onUserIntentChange("1", "USD")
         val result = (viewModel.currencyConvertUiState.value as CurrencyConvertUiState.Success).currencyData?.ratesMap
 
         assertEquals(
@@ -87,7 +86,7 @@ class MainViewModelTest {
         val currency2USD = newRatesMap.mapValues {
             it.value.times(2)
         }
-        viewModel.onBaseCurrencyChange("2", "USD")
+        viewModel.onUserIntentChange("2", "USD")
         val result = (viewModel.currencyConvertUiState.value as CurrencyConvertUiState.Success).currencyData?.ratesMap
         assertEquals(
             currency2USD,
@@ -109,7 +108,7 @@ class MainViewModelTest {
         val converted = newRatesMap.mapValues {
             it.value.times(moneyInUSD)
         }
-        viewModel.onBaseCurrencyChange(userInput.toString(), userSelectedCurrency)
+        viewModel.onUserIntentChange(userInput.toString(), userSelectedCurrency)
         val result = (viewModel.currencyConvertUiState.value as CurrencyConvertUiState.Success).currencyData?.ratesMap
         assertEquals(
             converted,
