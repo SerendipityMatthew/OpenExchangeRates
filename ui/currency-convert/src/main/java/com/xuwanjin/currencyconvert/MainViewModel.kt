@@ -1,25 +1,22 @@
 package com.xuwanjin.currencyconvert
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skydoves.sandwich.getOrNull
 import com.skydoves.sandwich.suspendOnError
 import com.skydoves.sandwich.suspendOnException
 import com.skydoves.sandwich.suspendOnSuccess
-import com.xuwanjin.model.CurrencyData
 import com.xuwanjin.coredata.CurrencyDataRepo
 import com.xuwanjin.coredata.dao.CurrencyStore
 import com.xuwanjin.datastore.AppUtils
 import com.xuwanjin.datastore.DataStoreUtils
+import com.xuwanjin.model.CurrencyData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
