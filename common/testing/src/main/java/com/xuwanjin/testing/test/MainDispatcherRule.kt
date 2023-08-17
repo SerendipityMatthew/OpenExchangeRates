@@ -9,12 +9,13 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-
 /**
  * A JUnit [TestRule] that sets the Main dispatcher to [testDispatcher]
  * for the duration of the test.
  */
-class MainDispatcherRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
+class MainDispatcherRule
+@OptIn(ExperimentalCoroutinesApi::class)
+constructor(
     val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {
     @OptIn(ExperimentalCoroutinesApi::class)

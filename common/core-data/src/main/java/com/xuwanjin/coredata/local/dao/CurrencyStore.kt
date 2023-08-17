@@ -11,5 +11,4 @@ class CurrencyStore(
     }
 
     suspend fun updateCurrencyData(currencyData: CurrencyData) = currencyDao.insert(currencyData)
-
 }

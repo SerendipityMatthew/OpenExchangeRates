@@ -1,10 +1,8 @@
 package com.xuwanjin.datastore
 
 import android.text.format.DateFormat
-import android.util.Log
 import com.xuwanjin.datastore.AppConstant.CURRENCY_DATA_EXPIRED_TIME
 import java.util.Calendar
-
 
 object AppUtils {
 

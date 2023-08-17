@@ -28,4 +28,3 @@ fun BaseScaffold(
         topBar = topBarLayout
     )
 }
-

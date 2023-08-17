@@ -67,7 +67,6 @@ object DataStoreUtils {
         }
     }
 
-
     fun readBooleanData(key: String, default: Boolean = false): Boolean = runBlocking {
         var value = false
         dataStore.data.first {
@@ -103,7 +102,6 @@ object DataStoreUtils {
         }
         value
     }
-
 
     fun readLongData(key: String, default: Long = 0L): Long = runBlocking {
         var value = 0L
@@ -154,7 +152,6 @@ object DataStoreUtils {
     }
 
     fun saveSyncLongData(key: String, value: Long) = runBlocking { saveLongData(key, value) }
-
 
     suspend fun clear() {
         dataStore.edit {

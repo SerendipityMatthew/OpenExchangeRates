@@ -6,7 +6,6 @@ import androidx.room.TypeConverters
 import com.xuwanjin.model.CurrencyData
 import com.xuwanjin.model.converter.StringMapConverter
 
-
 @Database(
     entities = [
         CurrencyData::class,
@@ -14,7 +13,6 @@ import com.xuwanjin.model.converter.StringMapConverter
     version = 1,
     exportSchema = false
 )
-
 @TypeConverters(StringMapConverter::class)
 abstract class CurrencyDatabase : RoomDatabase() {
     abstract fun currencyDao(): CurrencyDao

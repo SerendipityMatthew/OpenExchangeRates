@@ -15,13 +15,14 @@ import com.xuwanjin.model.converter.StringMapConverter
     ]
 )
 data class CurrencyData(
-    @PrimaryKey @ColumnInfo(name = "base")   @SerializedName(value = "base") val base: String = "",
-    @ColumnInfo(name = "disclaimer")  @SerializedName(value = "disclaimer") val disclaimer: String = "",
+    @PrimaryKey @ColumnInfo(name = "base") @SerializedName(value = "base") val base: String = "",
+    @ColumnInfo(name = "disclaimer") @SerializedName(value = "disclaimer") val disclaimer: String = "",
     @ColumnInfo(name = "license") @SerializedName(value = "license") val license: String = "",
-    @ColumnInfo(name = "timestamp")  @SerializedName(value = "timestamp") val timestamp: Long = 0,
+    @ColumnInfo(name = "timestamp") @SerializedName(value = "timestamp") val timestamp: Long = 0,
     @TypeConverters(StringMapConverter::class)
-    @ColumnInfo(name = "rates") @SerializedName(value = "rates") val ratesMap: Map<String, Float> = mutableMapOf(),
-){
+    @ColumnInfo(name = "rates")
+    @SerializedName(value = "rates") val ratesMap: Map<String, Float> = mutableMapOf(),
+) {
     override fun toString(): String {
         return "CurrencyData(base='$base', disclaimer='$disclaimer', license='$license', timestamp=$timestamp, ratesMap=$ratesMap)"
     }

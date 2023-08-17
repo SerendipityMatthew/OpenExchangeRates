@@ -11,6 +11,7 @@ compose-bom = "2023.08.00"
 targetSdk = "34"
 minSdk = "24"
 compileSdk = "34"
+twitter-detekt = "0.0.26"
 versionCode = "1"
 versionName = "1.0.0"
 kotlinCompilerExtensionVersion = "1.5.1"
@@ -32,10 +33,13 @@ com-google-android-material-material = "1.9.0"
 kotlinx-coroutines = "1.7.3"
 runner = "1.5.2"
 gson = "2.10.1"
+detekt = "1.23.1"
+com-twitter-compose-rules = "0.0.26"
 
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+twitter-compose-detekt = { module = "com.twitter.compose.rules:detekt", version.ref = "twitter-detekt" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
@@ -77,6 +81,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+detekt_formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -84,6 +89,7 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kspLibrary = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hiltPlugin= { id = "com.google.dagger.hilt.android", version.ref = "daggerHiltAndroid"}
+detekt= { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
 
 
 

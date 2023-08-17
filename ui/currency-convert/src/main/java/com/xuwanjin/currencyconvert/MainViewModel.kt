@@ -23,7 +23,6 @@ import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-
 sealed interface CurrencyConvertUiState {
     data object Loading : CurrencyConvertUiState
     data class Success(val currencyData: CurrencyData?) : CurrencyConvertUiState
@@ -55,7 +54,6 @@ class MainViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = CurrencyConvertUiState.Loading
             )
-
 
     init {
         fetchCurrencies()
@@ -117,11 +115,9 @@ class MainViewModel @Inject constructor(
                     it.getOrNull()?.let { data ->
                         processCurrencyData(data)
                     }
-
                 }
             }
         }
-
     }
 
     private fun processCurrencyData(data: CurrencyData) {
@@ -156,12 +152,9 @@ class MainViewModel @Inject constructor(
                     processCurrencyData(this.data)
                 }
                 .suspendOnError {
-
                 }
                 .suspendOnException {
-
                 }
         }
     }
-
 }

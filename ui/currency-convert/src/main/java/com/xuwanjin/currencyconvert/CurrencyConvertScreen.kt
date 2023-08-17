@@ -45,6 +45,7 @@ import com.xuwanjin.datastore.AppUtils
 import com.xuwanjin.uicomponent.BaseScaffold
 import com.xuwanjin.uicomponent.BaseTextField
 import com.xuwanjin.uicomponent.RoundedCornerShape12
+import java.util.Locale
 
 @RootNavGraph(start = true)
 @Destination
@@ -85,7 +86,6 @@ fun CurrencyConvertScreen(
                         .clip(RoundedCornerShape12),
                     inputValue,
                     onValueChange = {
-
                         val value = if (it.isBlank()) {
                             ""
                         } else {
@@ -94,7 +94,9 @@ fun CurrencyConvertScreen(
                         try {
                             inputValue.value = value
 
-                            viewModel.onUserIntentChange(value, selectedCurrency.value
+                            viewModel.onUserIntentChange(
+                                value,
+                                selectedCurrency.value
                             )
                         } catch (exception: NumberFormatException) {
                             exception.printStackTrace()
@@ -109,7 +111,6 @@ fun CurrencyConvertScreen(
                         viewModel.onUserIntentChange(inputValue.value, it)
                     }
                 )
-
             }
         },
         content = {
@@ -134,6 +135,7 @@ fun CurrencyConvertScreen(
                                         Text(
                                             modifier = Modifier.weight(1.0f),
                                             text = String.format(
+                                                Locale.getDefault(),
                                                 "%.3f",
                                                 (ratesPairList[index].second)
                                             ),
@@ -152,18 +154,14 @@ fun CurrencyConvertScreen(
                                                 fontSize = 12.sp,
                                             )
                                         )
-
                                     }
                                 }
                             }
-
                         }
                     )
-
                 }
 
                 else -> {
-
                 }
             }
         },
@@ -197,7 +195,6 @@ private fun ColumnScope.CurrencyDropdownMenu(
                 }
 
                 else -> {
-
                 }
             }
             Spacer(modifier = Modifier.weight(1.0f))
@@ -249,12 +246,10 @@ private fun ColumnScope.CurrencyDropdownMenu(
                         }
 
                         else -> {
-
                         }
                     }
                 }
             }
         }
-
     }
 }

@@ -5,7 +5,6 @@ import androidx.room.Query
 import com.xuwanjin.model.CurrencyData
 import kotlinx.coroutines.flow.Flow
 
-
 /**
  * [Room] DAO for [CurrencyData] related operations.
  */
