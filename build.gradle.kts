@@ -15,8 +15,8 @@ true // Needed to make the Suppress annotation work for the plugins block
 buildscript {
     dependencies {
         // other plugins...
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.47")
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:${libs.versions.detekt}")
+        classpath(libs.hilt.android.gradle.plugin)
+        classpath(libs.detekt.gradle.plugin)
     }
 }
 val sarifReportMerge by tasks.registering(ReportMergeTask::class) {

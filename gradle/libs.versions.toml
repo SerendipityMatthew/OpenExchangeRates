@@ -82,14 +82,16 @@ com-google-android-material-material = { group = "com.google.android.material", 
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 detekt_formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHiltAndroid" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kspLibrary = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-hiltPlugin= { id = "com.google.dagger.hilt.android", version.ref = "daggerHiltAndroid"}
-detekt= { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
+hiltPlugin = { id = "com.google.dagger.hilt.android", version.ref = "daggerHiltAndroid" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 
 
 

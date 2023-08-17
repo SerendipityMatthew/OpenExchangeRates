@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
     kotlin("kapt")
-
 }
 
 android {
@@ -13,11 +12,9 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
 
-//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunner = "com.xuwanjin.testing.test.OERAndroidJUnitRunner"
 
         consumerProguardFiles("consumer-rules.pro")
-
     }
 
     buildTypes {

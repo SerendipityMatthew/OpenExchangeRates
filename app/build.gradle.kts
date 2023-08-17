@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.kspLibrary) apply false
 
     kotlin("kapt")
-
 }
 
 android {
@@ -70,7 +69,6 @@ android {
 
 dependencies {
     // project
-
     implementation(project(":common:network"))
     implementation(project(":common:utils"))
     implementation(project(":common:ui-component"))
