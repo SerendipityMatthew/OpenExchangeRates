@@ -94,15 +94,11 @@ fun CurrencyConvertScreen(
                                 else -> input.trim() //new value
                             }
                         }
-                        try {
-                            inputValue.value = modifiedValue
-                            viewModel.onUserIntentChange(
-                                modifiedValue,
-                                selectedCurrency.value
-                            )
-                        } catch (exception: NumberFormatException) {
-                            exception.printStackTrace()
-                        }
+                        inputValue.value = modifiedValue
+                        viewModel.onUserIntentChange(
+                            modifiedValue,
+                            selectedCurrency.value
+                        )
                     }
                 )
                 CurrencyDropdownMenu(
