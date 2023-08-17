@@ -85,17 +85,19 @@ fun CurrencyConvertScreen(
                         .fillMaxWidth()
                         .clip(RoundedCornerShape12),
                     inputValue,
-                    onValueChange = {
-                        val value = if (it.isBlank()) {
-                            ""
+                    onValueChange = { input ->
+                        val modifiedValue = if (input.trim().isEmpty()) {
+                            input.trim()
                         } else {
-                            it.removePrefix(",").removePrefix(" ").removePrefix("-")
+                            when (input.toFloatOrNull()) {
+                                null -> inputValue.value  //old value
+                                else -> input.trim() //new value
+                            }
                         }
                         try {
-                            inputValue.value = value
-
+                            inputValue.value = modifiedValue
                             viewModel.onUserIntentChange(
-                                value,
+                                modifiedValue,
                                 selectedCurrency.value
                             )
                         } catch (exception: NumberFormatException) {
@@ -190,7 +192,7 @@ private fun ColumnScope.CurrencyDropdownMenu(
                         )
                     Text(
                         modifier = Modifier,
-                        text = "data updated time: $date",
+                        text = "data updated time: \n$date",
                     )
                 }
 

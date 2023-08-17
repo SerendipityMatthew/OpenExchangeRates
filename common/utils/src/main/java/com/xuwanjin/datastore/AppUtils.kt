@@ -1,21 +1,27 @@
 package com.xuwanjin.datastore
 
-import android.text.format.DateFormat
 import com.xuwanjin.datastore.AppConstant.CURRENCY_DATA_EXPIRED_TIME
-import java.util.Calendar
+import java.lang.IllegalArgumentException
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 object AppUtils {
 
     /**
      * timestamp convert to formatted date
      */
-    fun timestampToLocalDate(timestampInSeconds: Long, format: String = "dd-MM-yyyy"): String {
+    fun timestampToLocalDate(
+        timestampInSeconds: Long,
+    ): String {
+        val simpleDateFormat =
+            SimpleDateFormat("dd MMMM yyyy, HH:mm:ss", Locale.getDefault())
         return try {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = timestampInSeconds * 1000
-            DateFormat.format(format, calendar).toString()
-        } catch (exception: Exception) {
+            simpleDateFormat.format(timestampInSeconds * 1000L)
+        } catch (exception: IllegalArgumentException) {
             exception.printStackTrace()
+            ""
+        } catch (e: Exception) {
+            e.printStackTrace()
             ""
         }
     }
