@@ -3,7 +3,7 @@
 
 utils: datastore, extension method for other module.
 
-core-data:  database 
+core-data:  database
 
 currency-convert:  UI module, currency convert screen
 
